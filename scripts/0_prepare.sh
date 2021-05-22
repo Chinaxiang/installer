@@ -101,14 +101,15 @@ function prepare_image_files() {
 
 
 function main() {
-  prepare_online_install_required_pkg
+  # prepare_online_install_required_pkg
   prepare_config_xpack
 
-  echo " $(gettext 'Preparing Docker offline package')"
-  prepare_docker_bin
-  prepare_compose_bin
+  # echo " $(gettext 'Preparing Docker offline package')"
+  # prepare_docker_bin
+  # prepare_compose_bin
 
   echo -e "\n $(gettext 'Preparing image offline package')"
+  echo $VERSION
   prepare_image_files
 
 }

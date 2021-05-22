@@ -44,7 +44,7 @@ function set_internal_mysql() {
   set_config USE_EXTERNAL_MYSQL 0
   password=$(get_config DB_PASSWORD)
   if [[ -z "${password}" ]]; then
-    DB_PASSWORD=$(random_str 26)
+    DB_PASSWORD=$(random_str 6)
     set_config DB_PASSWORD ${DB_PASSWORD}
     set_config MYSQL_ROOT_PASSWORD ${DB_PASSWORD}
   fi
@@ -97,7 +97,7 @@ function set_internal_redis() {
   set_config USE_EXTERNAL_REDIS 0
   password=$(get_config REDIS_PASSWORD)
   if [[ -z "${password}" ]]; then
-    REDIS_PASSWORD=$(random_str 26)
+    REDIS_PASSWORD=$(random_str 6)
     set_config REDIS_PASSWORD "${REDIS_PASSWORD}"
   fi
 }
@@ -141,13 +141,13 @@ function set_volume_dir() {
   echo_yellow "\n3. $(gettext 'Configure Persistent Directory')"
   volume_dir=$(get_config VOLUME_DIR)
   if [[ -z "${volume_dir}" ]]; then
-    volume_dir="/opt/jumpserver"
+    volume_dir="/Users/hyx/Documents/jumpserver"
   fi
   confirm="n"
   read_from_input confirm "$(gettext 'Do you need custom persistent store, will use the default directory') ${volume_dir}?" "y/n" "${confirm}"
   if [[ "${confirm}" == "y" ]]; then
     echo
-    echo "$(gettext 'To modify the persistent directory such as logs video, you can select your largest disk and create a directory in it, such as') /opt/jumpserver"
+    echo "$(gettext 'To modify the persistent directory such as logs video, you can select your largest disk and create a directory in it, such as') /Users/hyx/Documents/jumpserver"
     echo "$(gettext 'Note: you can not change it after installation, otherwise the database may be lost')"
     echo
     df -h | egrep -v "map|devfs|tmpfs|overlay|shm"

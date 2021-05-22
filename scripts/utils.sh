@@ -23,7 +23,7 @@ function random_str() {
   if [[ "$?" == "0" ]]; then
     dmidecode -t 1 | grep UUID | awk '{print $2}' | base64 | head -c ${len}; echo
   else
-    cat /dev/urandom | tr -dc A-Za-z0-9 | head -c ${len}; echo
+    cat /dev/urandom | LC_CTYPE=C tr -dc A-Za-z0-9 | head -c ${len}; echo
   fi
 }
 

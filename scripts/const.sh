@@ -9,7 +9,7 @@ PROJECT_DIR=$(dirname "${SCRIPT_DIR}")
 export TEXTDOMAINDIR=$PROJECT_DIR/locale
 export TEXTDOMAIN=jumpserver-installer
 
-export CONFIG_DIR='/opt/jumpserver/config'
+export CONFIG_DIR='/Users/hyx/Documents/jumpserver/config'
 export CONFIG_FILE=$CONFIG_DIR/config.txt
 
 STATIC_ENV=${PROJECT_DIR}/static.env

@@ -5,7 +5,7 @@ BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 PROJECT_DIR=$(dirname ${BASE_DIR})
 # shellcheck source=./util.sh
 . "${BASE_DIR}/utils.sh"
-BACKUP_DIR=/opt/jumpserver/db_backup
+BACKUP_DIR=/Users/hyx/Documents/jumpserver/db_backup
 
 HOST=$(get_config DB_HOST)
 PORT=$(get_config DB_PORT)

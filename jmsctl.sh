@@ -76,6 +76,7 @@ EXE=""
 
 function start() {
   check_ipv6_iptables_if_need
+  # echo "$EXE up -d"
   ${EXE} up -d
 }
 
@@ -140,7 +141,11 @@ function main() {
   else
     pre_check || return 3
     EXE=$(get_docker_compose_cmd_line)
+    echo $EXE
   fi
+  
+  # exit 1
+
   case "${action}" in
   install)
     bash "${SCRIPT_DIR}/4_install_jumpserver.sh"

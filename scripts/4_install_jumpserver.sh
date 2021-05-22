@@ -11,10 +11,11 @@ function pre_install() {
 
 function post_install() {
   echo_green "\n>>> $(gettext 'The Installation is Complete')"
-  HOST=$(ip addr | grep 'state UP' -A2 | grep inet | egrep -v '(127.0.0.1|inet6|docker)' | awk '{print $2}' | tr -d "addr:" | head -n 1 | cut -d / -f1)
-  if [ ! "$HOST" ]; then
-      HOST=$(hostname -I | cut -d ' ' -f1)
-  fi
+  # HOST=$(ip addr | grep 'state UP' -A2 | grep inet | egrep -v '(127.0.0.1|inet6|docker)' | awk '{print $2}' | tr -d "addr:" | head -n 1 | cut -d / -f1)
+  # if [ ! "$HOST" ]; then
+  #     HOST=$(hostname -I | cut -d ' ' -f1)
+  # fi
+  HOST="127.0.0.1"
   HTTP_PORT=$(get_config HTTP_PORT)
   HTTPS_PORT=$(get_config HTTPS_PORT)
   SSH_PORT=$(get_config SSH_PORT)
@@ -50,7 +51,7 @@ function set_lang() {
     return
   fi
   # 设置过就不用改了
-  if grep "export LANG=" ~/.bashrc &> /dev/null; then
+  if grep "export LANG=" ~/.zshrc &> /dev/null; then
     return
   fi
   lang="cn"
@@ -59,8 +60,8 @@ function set_lang() {
   if [[ "${lang}" == "en" ]]; then
     LANG='en_US.UTF-8'
   fi
-  echo "export LANG=${LANG}" >> ~/.bashrc
-  # 之所以这么设置，是因为设置完 ~/.bashrc，就不会再询问，然而 LANG 环境变量，在用户当前 bash 进程中不生效
+  echo "export LANG=${LANG}" >> ~/.zshrc
+  # 之所以这么设置，是因为设置完 ~/.zshrc，就不会再询问，然而 LANG 环境变量，在用户当前 bash 进程中不生效
   echo "export LANG=${LANG}" >> "${PROJECT_DIR}"/static.env
   export LANG
 }
@@ -70,10 +71,10 @@ function main() {
   set_lang
   pre_install
   prepare_config
-  echo_green "\n>>> $(gettext 'Install and Configure Docker')"
-  (bash "${BASE_DIR}/2_install_docker.sh")
-  echo_green "\n>>> $(gettext 'Loading Docker Image')"
-  (bash "${BASE_DIR}/3_load_images.sh")
+  # echo_green "\n>>> $(gettext 'Install and Configure Docker')"
+  # (bash "${BASE_DIR}/2_install_docker.sh")
+  # echo_green "\n>>> $(gettext 'Loading Docker Image')"
+  # (bash "${BASE_DIR}/3_load_images.sh")
   echo_green "\n>>> $(gettext 'Install and Configure JumpServer')"
   (bash "${BASE_DIR}/1_config_jumpserver.sh")
   post_install

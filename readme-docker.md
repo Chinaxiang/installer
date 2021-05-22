@@ -1,0 +1,109 @@
+# JumpServer 安装管理包
+
+
+installer 可以安装、部署、更新 管理 JumpServer
+
+## 环境依赖
+  
+- docker
+
+
+## 安装部署
+
+```bash
+# 安装，版本是在 static.env 指定的
+$ ./jmsctl.sh install
+
+# 可以设置 国内加速源来安装
+$ export DOCKER_IMAGE_PREFIX=hub-mirror.c.163.com
+$ ./jmsctl.sh install
+
+# 检查更新
+$ ./jmsctl.sh check_update
+
+# 升级到 static.env 中的版本
+$ ./jmsctl.sh upgrade
+
+# 升级到指定版本
+$ ./jmsctl.sh upgrade v2.6.1
+```
+
+## 离线安装
+```bash
+# 生成离线包
+$ cd scripts && bash 0_prepare.sh
+
+# 完成以后将这个包压缩，复制到想安装的机器，直接安装即可
+$ ./jmsctl.sh install
+```
+
+
+## 管理
+
+```
+# 启动
+$ ./jmsctl.sh start
+
+# 重启
+$ ./jmsctl.sh restart
+
+# 关闭, 不包含数据库
+$ ./jmsctl.sh stop
+
+# 关闭所有
+$ ./jmsctl.sh down
+
+# 备份数据库
+$ ./jmsctl.sh backup_db
+
+# 查看日志
+$ ./jmsctl.sh tail
+
+```
+
+## IPV6 支持
+
+```
+# 添加IPV6 转发规则
+$ ip6tables -t nat -A POSTROUTING -s 2001:db8:1::/64 -j MASQUERADE
+$ firewall-cmd --permanent --zone=public --add-masquerade
+
+# 修改配置文件支持 IPv6
+$ vim /opt/jumpserver/config/config.txt
+...
+USE_IPV6=1
+...
+```
+
+## 配置文件说明
+
+配置文件将会放在 /opt/jumpserver/config 中
+
+```
+[root@jumpserver-qa config]# tree .
+.
+├── config.txt      # 主配置文件
+├── core
+│   └── config.yml  # core yml 格式配置文件，可以留空，使用 config.txt 设置
+├── koko
+│   └── config.yml  # koko yml 格式配置文件，可以留空，使用 config.txt 设置
+├── mysql
+│   └── my.cnf      # mysql 配置文件
+├── nginx           # nginx 配置文件
+│   ├── cert
+│   │   ├── server.crt
+│   │   └── server.key
+│   ├── lb_http_server.conf
+│   └── lb_ssh_server.conf
+├── README.md
+└── redis           
+    └── redis.conf  # redis 配置文件
+
+6 directories, 11 files
+```
+
+### config.txt 说明
+
+config.txt 文件是环境变量式配置文件，会挂在到各个容器中，这样可以不必为 koko，core，lion 单独设置配置文件
+
+config-example.txt 有说明，可以参考
